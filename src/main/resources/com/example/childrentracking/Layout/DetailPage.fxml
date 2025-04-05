@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Text?>
+
+<VBox fx:id="root" prefHeight="600.0" stylesheets="@../css_stylings/MainPage.css" prefWidth="800.0" styleClass="root" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <HBox styleClass="status-bar">
+        <Label text="Trạng thái: Đang chạy" styleClass="status-label"/>
+        <Button text="Tắt" styleClass="toggle-button"/>
+        <Label text="Thời gian: 2 giờ 15 phút" styleClass="time-label"/>
+    </HBox>
+
+    <HBox styleClass="main-content">
+        <VBox styleClass="left-pane">
+            <VBox styleClass="chart-section">
+                <Label text="Tổng quan hoạt động" styleClass="section-title"/>
+                <HBox alignment="CENTER">
+                    <Circle radius="80" fill="#3498db" />
+                    <Circle radius="50" fill="#2ecc71" />
+                    <Circle radius="30" fill="#e74c3c" />
+                </HBox>
+                <Label text="Chrome: 50%, Word: 20%, Game: 15%" styleClass="chart-legend"/>
+            </VBox>
+
+            <VBox styleClass="activity-section">
+                <Label text="Hoạt động chi tiết" styleClass="section-title"/>
+                <ScrollPane fitToWidth="true">
+                    <ListView fx:id="activityList" styleClass="activity-list" prefHeight="200.0"/>
+                </ScrollPane>
+            </VBox>
+        </VBox>
+
+        <VBox styleClass="summary-section">
+            <Label text="Tóm tắt nhanh" styleClass="section-title"/>
+            <Text styleClass="summary-text">
+                Trong 2 giờ qua, bạn đã dành 50% thời gian lướt web (chủ yếu trên Chrome), 20% soạn thảo trên Word, và 15% chơi game. Thời gian nghỉ: 10 phút.
+            </Text>
+            <Button text="Xem báo cáo đầy đủ" styleClass="report-button"/>
+        </VBox>
+    </HBox>
+</VBox>
