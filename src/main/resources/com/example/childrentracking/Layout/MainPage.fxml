@@ -1,1 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="@../css_stylings/MainPage.css">
+    <top>
+        <HBox styleClass="header-box" alignment="CENTER">
+            <children>
+                <VBox HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label text="Xin chào, " styleClass="greeting-label"/>
+                        <Label fx:id="usernameLabel" styleClass="username-label"/>
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER_RIGHT">
+                    <Label fx:id="clockLabel" styleClass="clock-label"/>
+                    <Label fx:id="dateLabel" styleClass="date-label"/>
+                </VBox>
+            </children>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="30">
+            <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@images/activity_icon.png" />
+                </image>
+                <effect>
+                    <DropShadow color="#3d3d3d" height="10.0" radius="4.5" spread="0.2" width="10.0" />
+                </effect>
+            </ImageView>
+
+            <Label fx:id="statusLabel" text="Sẵn sàng ghi hoạt động" styleClass="status-label"/>
+
+            <Label fx:id="recordingTimeLabel" text="00:00:00" styleClass="time-label"/>
+
+            <Button fx:id="recordButton" mnemonicParsing="false" styleClass="record-button" text="Bắt đầu ghi">
+                <effect>
+                    <InnerShadow />
+                </effect>
+            </Button>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" styleClass="footer-box">
+            <Label text="Theo dõi hoạt động máy tính © 2023" styleClass="footer-label"/>
+        </HBox>
+    </bottom>
+</BorderPane>
