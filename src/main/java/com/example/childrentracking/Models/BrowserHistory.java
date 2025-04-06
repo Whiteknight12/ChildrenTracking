@@ -19,4 +19,6 @@ public class BrowserHistory {
         VisitStart=visitStart;
         VisitEnd=visitEnd;
     }
+
+    public BrowserHistory() {}
 }

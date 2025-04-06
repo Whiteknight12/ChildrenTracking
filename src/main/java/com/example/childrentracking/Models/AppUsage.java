@@ -13,4 +13,6 @@ public class AppUsage {
         ApplicationName=applicationname;
         UsageDuration=usageduration;
     }
+
+    public AppUsage() {}
 }

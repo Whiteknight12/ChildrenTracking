@@ -1,7 +1,13 @@
 package com.example.childrentracking;
 
+import com.example.childrentracking.DataTableClass.AppUsageTable;
+import com.example.childrentracking.DataTableClass.BrowserHistoryTable;
+import com.example.childrentracking.DataTableClass.RecordingSessionTable;
 import com.example.childrentracking.DataTableClass.UserTable;
 import com.example.childrentracking.Database.ApplicationDbContext;
+import com.example.childrentracking.Models.AppUsage;
+import com.example.childrentracking.Models.BrowserHistory;
+import com.example.childrentracking.Models.RecordingSession;
 import com.example.childrentracking.Models.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +36,12 @@ public class MainApplication extends Application {
     private void setupDatabase() {
         Connection connection=ApplicationDbContext.getConnection();
         UserTable userTable=new UserTable(connection);
+        AppUsageTable appUsageTable=new AppUsageTable(connection);
+        BrowserHistoryTable browserHistoryTable=new BrowserHistoryTable(connection);
+        RecordingSessionTable recordingSessionTable=new RecordingSessionTable(connection);
+        appUsageTable.createTable(new AppUsage());
+        browserHistoryTable.createTable(new BrowserHistory());
+        recordingSessionTable.createTable(new RecordingSession());
         userTable.createTable(new User());
     }
 }

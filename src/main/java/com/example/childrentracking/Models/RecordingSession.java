@@ -15,4 +15,6 @@ public class RecordingSession {
         StartTime = starttime;
         EndTime = endtime;
     }
+
+    public RecordingSession() {}
 }

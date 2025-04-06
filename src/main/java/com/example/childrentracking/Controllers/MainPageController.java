@@ -75,14 +75,16 @@ public class MainPageController {
         else usernameLabel.setText(user.FullName);
         recordButton.setOnAction(event -> toggleRecording());
         statusLabel.setText("Chưa ghi");
-        Stage stage=(Stage) recordButton.getScene().getWindow();
-        trayManager = new SystemTrayManager(stage);
-        trayManager.setUp();
-        stage.setOnCloseRequest(event -> {
-            if (isRecording) {
-                event.consume();
-                trayManager.minimizeToTray();
-            }
+        Platform.runLater(() -> {
+            Stage stage=(Stage) recordButton.getScene().getWindow();
+            trayManager = new SystemTrayManager(stage);
+            trayManager.setUp();
+            stage.setOnCloseRequest(event -> {
+                if (isRecording) {
+                    event.consume();
+                    trayManager.minimizeToTray();
+                }
+            });
         });
     }
 
