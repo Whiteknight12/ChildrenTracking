@@ -111,7 +111,6 @@ public class MainPageController {
         }));
         recordingTimeline.setCycleCount(Animation.INDEFINITE);
         recordingTimeline.play();
-        minimizeToTray();
     }
 
     private String formatDuration(long millis) {
@@ -129,7 +128,6 @@ public class MainPageController {
         browserHistoryCollector.stopCollecting();
         recordingTimeline.stop();
         saveCollectedData();
-        restoreFromTray();
     }
 
     private void saveCollectedData() {

@@ -53,23 +53,25 @@ public class BrowserHistoryCollector {
             } else if (os.contains("nix") || os.contains("nux")) {
                 historyPath = Paths.get(userHome, ".config", "google-chrome", "Default", "History");
             }
+
             if (historyPath != null && Files.exists(historyPath)) {
                 Path tempHistoryPath = Files.createTempFile("chrome_history", ".db");
                 Files.copy(historyPath, tempHistoryPath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
                 String url = "jdbc:sqlite:" + tempHistoryPath.toString();
                 try (Connection conn = DriverManager.getConnection(url);
-                     Statement stmt = conn.createStatement()) {
+                Statement stmt = conn.createStatement()) {
                     long cutoffTime = (System.currentTimeMillis() / 1000) - 3600;
                     long chromeEpochOffset = 11644473600L * 1000000L;
                     ResultSet rs = stmt.executeQuery(
-                            "SELECT url, title, last_visit_time, visit_duration FROM urls " +
-                                    "JOIN visits ON urls.id = visits.url " +
-                                    "WHERE last_visit_time/1000000 - " + chromeEpochOffset/1000000 + " > " + cutoffTime +
-                                    " ORDER BY last_visit_time DESC");
+                    "SELECT u.url, u.title, v.visit_time, v.visit_duration " +
+                        "FROM urls u " +
+                        "JOIN visits v ON u.id = v.url " +
+                        "WHERE v.visit_time/1000000 - " + (chromeEpochOffset / 1000000) + " > " + cutoffTime +
+                        " ORDER BY v.visit_time DESC");
                     while (rs.next()) {
                         String urls = rs.getString("url");
                         String title = rs.getString("title");
-                        long visitTime = rs.getLong("last_visit_time") / 1000000 - chromeEpochOffset/1000000;
+                        long visitTime = rs.getLong("visit_time") / 1000000 - (chromeEpochOffset / 1000000);
                         long visitDuration = rs.getLong("visit_duration") / 1000000;
                         browserHistory.add(new BrowserVisit("Chrome", urls, title, visitTime * 1000, (visitTime + visitDuration) * 1000));
                     }
@@ -93,6 +95,7 @@ public class BrowserHistoryCollector {
             } else if (os.contains("nix") || os.contains("nux")) {
                 historyPath = Paths.get(userHome, ".config", "microsoft-edge", "Default", "History");
             }
+
             if (historyPath != null && Files.exists(historyPath)) {
                 Path tempHistoryPath = Files.createTempFile("edge_history", ".db");
                 Files.copy(historyPath, tempHistoryPath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
@@ -100,16 +103,17 @@ public class BrowserHistoryCollector {
                 try (Connection conn = DriverManager.getConnection(url);
                      Statement stmt = conn.createStatement()) {
                     long cutoffTime = (System.currentTimeMillis() / 1000) - 3600;
-                    long edgeEpochOffset = 11644473600L * 1000000L;
+                    long chromeEpochOffset = 11644473600L * 1000000L;
                     ResultSet rs = stmt.executeQuery(
-                            "SELECT url, title, last_visit_time, visit_duration FROM urls " +
-                                    "JOIN visits ON urls.id = visits.url " +
-                                    "WHERE last_visit_time/1000000 - " + edgeEpochOffset/1000000 + " > " + cutoffTime +
-                                    " ORDER BY last_visit_time DESC");
+                            "SELECT u.url, u.title, v.visit_time, v.visit_duration " +
+                                    "FROM urls u " +
+                                    "JOIN visits v ON u.id = v.url " +
+                                    "WHERE v.visit_time/1000000 - " + (chromeEpochOffset / 1000000) + " > " + cutoffTime +
+                                    " ORDER BY v.visit_time DESC");
                     while (rs.next()) {
                         String urls = rs.getString("url");
                         String title = rs.getString("title");
-                        long visitTime = rs.getLong("last_visit_time") / 1000000 - edgeEpochOffset/1000000;
+                        long visitTime = rs.getLong("visit_time") / 1000000 - (chromeEpochOffset / 1000000);
                         long visitDuration = rs.getLong("visit_duration") / 1000000;
                         browserHistory.add(new BrowserVisit("Edge", urls, title, visitTime * 1000, (visitTime + visitDuration) * 1000));
                     }

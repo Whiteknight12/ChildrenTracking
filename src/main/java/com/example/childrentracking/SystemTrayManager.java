@@ -1,6 +1,7 @@
 package com.example.childrentracking;
 
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -21,6 +22,11 @@ public class SystemTrayManager {
 
     public void setUp() {
         if (!isTraySupported) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Thiết bị của bạn không tương thức ứng dụng này!");
+            alert.showAndWait();
             return;
         }
         try {
@@ -47,7 +53,7 @@ public class SystemTrayManager {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            trayIcon = new TrayIcon(icon, "Ứng dụng theo dõi hoạt động", popup);
+            trayIcon = new TrayIcon(icon, "UlTrack", popup);
             trayIcon.setImageAutoSize(true);
             openItem.addActionListener(e -> Platform.runLater(() -> {
                 primaryStage.show();
@@ -81,7 +87,7 @@ public class SystemTrayManager {
         if (isTraySupported) {
             Platform.runLater(() -> {
                 primaryStage.hide();
-                showNotification("Ứng dụng đang chạy ngầm", "Ứng dụng đang ghi lại hoạt động của bạn");
+                showNotification("Ứng dụng đang chạy", "Ứng dụng đang ghi lại hoạt động của bạn");
             });
         }
     }
