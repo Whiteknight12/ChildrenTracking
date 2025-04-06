@@ -158,10 +158,6 @@ public class MainPageController {
         alert.showAndWait();
     }
 
-    private void minimizeToTray() {
-        trayManager.minimizeToTray();
-    }
-
     private void restoreFromTray() {
         Platform.runLater(() -> {
             Stage stage = (Stage) recordButton.getScene().getWindow();
