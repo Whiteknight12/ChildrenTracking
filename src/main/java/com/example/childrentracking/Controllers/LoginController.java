@@ -40,6 +40,7 @@ public class LoginController {
     @FXML
     public void initialize() {
         createnewaccount.setOnAction(event -> goToCreateAccount(event));
+        loginbutton.setOnAction(event -> Login(event));
     }
 
     private Connection connection= ApplicationDbContext.getConnection();
@@ -54,12 +55,6 @@ public class LoginController {
             Parent root = loader.load();
             Scene scene=new Scene(root, width, height);
             stage.setScene(scene);
-
-            root.setOpacity(0);
-            FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), root);
-            fadeIn.setFromValue(0);
-            fadeIn.setToValue(1);
-            fadeIn.play();
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -85,7 +80,23 @@ public class LoginController {
                 UserSession.setUsername(usernametext.getText());
                 UserSession.setUserid(user.UserId);
                 Stage stage=(Stage)loginbutton.getScene().getWindow();
+                FXMLLoader loader=new FXMLLoader(getClass().getResource("/com/example/childrentracking/Layout/MainView.fxml"));
+                try {
+                    Parent root=loader.load();
+                    double width=stage.getScene().getWindow().getWidth();
+                    double height=stage.getScene().getWindow().getHeight();
+                    Scene scene=new Scene(root, width, height);
+                    stage.setScene(scene);
 
+                    root.setOpacity(0);
+                    FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), root);
+                    fadeIn.setFromValue(0);
+                    fadeIn.setToValue(1);
+                    fadeIn.play();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
