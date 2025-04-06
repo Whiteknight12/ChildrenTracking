@@ -11,4 +11,12 @@ public class BrowserHistory {
     public String Title;
     public Timestamp VisitStart;
     public Timestamp VisitEnd;
+
+    public BrowserHistory(int sessionid, String url, String title, Timestamp visitStart, Timestamp visitEnd) {
+        SessionId=sessionid;
+        Url=url;
+        Title=title;
+        VisitStart=visitStart;
+        VisitEnd=visitEnd;
+    }
 }

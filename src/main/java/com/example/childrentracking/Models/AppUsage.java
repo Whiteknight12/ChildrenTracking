@@ -7,4 +7,10 @@ public class AppUsage {
     public RecordingSession Session;
     public String ApplicationName;
     public long UsageDuration;
+
+    public AppUsage(int sessionid, String applicationname, long usageduration) {
+        SessionId=sessionid;
+        ApplicationName=applicationname;
+        UsageDuration=usageduration;
+    }
 }

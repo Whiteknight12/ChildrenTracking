@@ -3,7 +3,7 @@ package com.example.childrentracking.Database;
 import java.util.List;
 
 public interface BaseRepository<T> {
-    void insert(T object);
+    int insert(T object);
     void update(T object);
     void delete(int id);
     List<T> findAll();

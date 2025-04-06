@@ -12,6 +12,7 @@ module com.example.childrentracking {
     requires java.sql;
     requires java.xml.crypto;
     requires transitive mysql.connector.j;
+    requires java.desktop;
 
     opens com.example.childrentracking to javafx.fxml;
     exports com.example.childrentracking;

@@ -23,7 +23,8 @@ public abstract class DatabaseTable<T> implements BaseRepository<T> {
     }
 
     @Override
-    public void insert(T entity) {
+    public int insert(T entity) {
+        int generatedId=-1;
         try {
             Field[] fields = entityType.getDeclaredFields();
             StringBuilder columns = new StringBuilder();
@@ -40,12 +41,15 @@ public abstract class DatabaseTable<T> implements BaseRepository<T> {
             values.setLength(values.length() - 1);
             String sql = "INSERT INTO " + tableName + " (" + columns + ") VALUES (" + values + ")";
             try (Statement stmt = connection.createStatement()) {
-                stmt.executeUpdate(sql);
+                stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+                ResultSet rs=stmt.getGeneratedKeys();
+                if (rs.next()) generatedId=rs.getInt(1);
             }
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+        return generatedId;
     }
 
     @Override
