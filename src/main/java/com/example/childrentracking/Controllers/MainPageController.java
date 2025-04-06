@@ -1,5 +1,8 @@
 package com.example.childrentracking.Controllers;
 
+import com.example.childrentracking.DataTableClass.UserTable;
+import com.example.childrentracking.Database.ApplicationDbContext;
+import com.example.childrentracking.Models.User;
 import com.example.childrentracking.UserSession;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -9,11 +12,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class MainPageController {
+    private final Connection connection= ApplicationDbContext.getConnection();
+    private final UserTable userTable=new UserTable(connection);
+
     @FXML
     private Label clockLabel;
 
@@ -40,6 +47,10 @@ public class MainPageController {
         }), new KeyFrame(Duration.seconds(1)));
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
-        usernameLabel.setText(UserSession.getUsername());
+        User user=userTable.findBySpecialProperty("UserName", UserSession.getUsername());
+        if (user.FullName==null || user.FullName.isEmpty()) {
+            usernameLabel.setText("Người dùng");
+        }
+        else usernameLabel.setText(user.FullName);
     }
 }
